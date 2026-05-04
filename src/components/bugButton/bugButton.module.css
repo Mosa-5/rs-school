@@ -1,0 +1,14 @@
+.bugButton {
+  align-self: flex-end;
+  padding: 0.5rem 1rem;
+  background: #b91c1c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.bugButton:hover {
+  background: #991b1b;
+}

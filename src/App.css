@@ -34,3 +34,10 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.error {
+  text-align: center;
+  color: #b91c1c;
+  padding: 1.5rem;
+  margin: 0;
+}

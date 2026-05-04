@@ -1,6 +1,8 @@
 import { Component } from 'react';
-import Search from './components/search';
+import Search from './components/search/search';
 import CardList, { type CardItem } from './components/cardList/cardList';
+import Loader from './components/loader/loader';
+import BugButton from './components/bugButton/bugButton';
 import { fetchCharacters } from './api/richAndMorty';
 import './App.css';
 
@@ -9,12 +11,16 @@ const SEARCH_KEY = 'rs-school:lastSearch';
 type AppState = {
   items: CardItem[];
   searchTerm: string;
+  loading: boolean;
+  error: string | null;
 };
 
 class App extends Component<object, AppState> {
   state: AppState = {
     items: [],
     searchTerm: localStorage.getItem(SEARCH_KEY) ?? '',
+    loading: false,
+    error: null,
   };
 
   componentDidMount() {
@@ -29,6 +35,7 @@ class App extends Component<object, AppState> {
 
   loadCharacters = async (rawTerm: string) => {
     const term = rawTerm.trim();
+    this.setState({ loading: true, error: null });
     try {
       const data = await fetchCharacters({ search: term || undefined });
       this.setState({
@@ -38,9 +45,13 @@ class App extends Component<object, AppState> {
           description: `${character.species} • ${character.status}`,
         })),
       });
-    } catch (err) {
-      console.error(err);
-      this.setState({ items: [] });
+    } catch {
+      this.setState({
+        items: [],
+        error: 'Could not load characters. Please try again.',
+      });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
@@ -49,6 +60,12 @@ class App extends Component<object, AppState> {
     localStorage.setItem(SEARCH_KEY, term);
     this.setState({ searchTerm: term });
   };
+
+  renderResults() {
+    if (this.state.loading) return <Loader />;
+    if (this.state.error) return <p className="error">{this.state.error}</p>;
+    return <CardList items={this.state.items} />;
+  }
 
   render() {
     return (
@@ -59,9 +76,8 @@ class App extends Component<object, AppState> {
             onSearch={this.handleSearch}
           />
         </section>
-        <section className="results">
-          <CardList items={this.state.items} />
-        </section>
+        <section className="results">{this.renderResults()}</section>
+        <BugButton />
       </div>
     );
   }
