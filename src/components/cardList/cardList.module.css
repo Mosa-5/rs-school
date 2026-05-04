@@ -1,0 +1,12 @@
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .noResults{
+    text-align: center;
+    color: #585858;
+    font-size: 20px;
+    font-weight: 500;
+  }

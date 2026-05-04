@@ -1,0 +1,25 @@
+
+.search{
+    display: flex;
+    gap: 10px;
+}
+
+.search input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.search button {
+    padding: 12px 20px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.search button:hover {
+    background: #585858;
+}
