@@ -42,7 +42,7 @@ class App extends Component<object, AppState> {
         items: data.results.map((character) => ({
           id: character.id,
           title: character.name,
-          description: `${character.species} • ${character.status}`,
+          description: `${character.species} | ${character.status}`,
         })),
       });
     } catch {
