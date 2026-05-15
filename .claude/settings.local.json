@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "PowerShell(npm i *)",
-      "PowerShell(npm test *)",
-      "PowerShell(npm run *)"
-    ]
-  }
-}
