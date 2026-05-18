@@ -1,0 +1,14 @@
+.about {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.about h1 {
+  margin-bottom: 16px;
+}
+
+.about p {
+  margin-bottom: 12px;
+  line-height: 1.5;
+}

@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import Card from './card';
 import styles from './cardList.module.css';
 
@@ -10,27 +9,38 @@ export type CardItem = {
 
 type CardListProps = {
   items: CardItem[];
+  onItemClick?: (id: number) => void;
 };
 
-class CardList extends Component<CardListProps> {
-  render() {
-    const { items } = this.props;
-
-    if (items.length === 0) {
-      return <p className={styles.noResults}>No results.</p>;
-    }
-    return (
-      <div className={styles.list}>
-        {items.map((item) => (
+function CardList({ items, onItemClick }: CardListProps) {
+  if (items.length === 0) {
+    return <p className={styles.noResults}>No results.</p>;
+  }
+  return (
+    <div className={styles.list}>
+      {items.map((item) =>
+        onItemClick ? (
+          <button
+            key={item.id}
+            type="button"
+            className={styles.cardButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              onItemClick(item.id);
+            }}
+          >
+            <Card title={item.title} description={item.description} />
+          </button>
+        ) : (
           <Card
             key={item.id}
             title={item.title}
             description={item.description}
           />
-        ))}
-      </div>
-    );
-  }
+        )
+      )}
+    </div>
+  );
 }
 
 export default CardList;

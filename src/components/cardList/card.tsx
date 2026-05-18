@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import styles from './card.module.css';
 
 type CardProps = {
@@ -6,15 +5,13 @@ type CardProps = {
   description: string;
 };
 
-class Card extends Component<CardProps> {
-  render() {
-    return (
-      <div className={styles.card}>
-        <h2 className={styles.title}>{this.props.title}</h2>
-        <p className={styles.description}>{this.props.description}</p>
-      </div>
-    );
-  }
+function Card({ title, description }: CardProps) {
+  return (
+    <div className={styles.card}>
+      <h2 className={styles.title}>{title}</h2>
+      <p className={styles.description}>{description}</p>
+    </div>
+  );
 }
 
 export default Card;
