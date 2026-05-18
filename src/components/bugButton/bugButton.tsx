@@ -1,29 +1,22 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './bugButton.module.css';
 
-type State = { shouldThrow: boolean };
+function BugButton() {
+  const [shouldThrow, setShouldThrow] = useState(false);
 
-class BugButton extends Component<object, State> {
-  state: State = { shouldThrow: false };
-
-  handleClick = () => {
-    this.setState({ shouldThrow: true });
-  };
-
-  render() {
-    if (this.state.shouldThrow) {
-      throw new Error('Test error triggered by user.');
-    }
-    return (
-      <button
-        type="button"
-        className={styles.bugButton}
-        onClick={this.handleClick}
-      >
-        Throw error
-      </button>
-    );
+  if (shouldThrow) {
+    throw new Error('Test error triggered by user.');
   }
+
+  return (
+    <button
+      type="button"
+      className={styles.bugButton}
+      onClick={() => setShouldThrow(true)}
+    >
+      Throw error
+    </button>
+  );
 }
 
 export default BugButton;
