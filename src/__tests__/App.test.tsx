@@ -1,6 +1,8 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import App from '../App';
+import Home from '../routes/Home';
 import { fetchCharacters, type Character } from '../api/richAndMorty';
 
 jest.mock('../api/richAndMorty');
@@ -17,6 +19,17 @@ const character = (overrides: Partial<Character> = {}): Character => ({
   ...overrides,
 });
 
+const renderApp = () =>
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+        </Route>
+      </Routes>
+    </MemoryRouter>
+  );
+
 describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
@@ -26,7 +39,7 @@ describe('App', () => {
   test('fetches with no search on mount when localStorage is empty', async () => {
     mockedFetch.mockResolvedValue({ results: [] });
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() => {
       expect(mockedFetch).toHaveBeenCalledWith({ search: undefined });
@@ -37,7 +50,7 @@ describe('App', () => {
     localStorage.setItem(SEARCH_KEY, 'morty');
     mockedFetch.mockResolvedValue({ results: [] });
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() => {
       expect(mockedFetch).toHaveBeenCalledWith({ search: 'morty' });
@@ -49,7 +62,7 @@ describe('App', () => {
       results: [character({ id: 1, name: 'Rick Sanchez' })],
     });
 
-    render(<App />);
+    renderApp();
 
     expect(
       screen.getByRole('status', { name: 'Loading' })
@@ -63,7 +76,7 @@ describe('App', () => {
   test('shows error message when fetch fails', async () => {
     mockedFetch.mockRejectedValue(new Error('boom'));
 
-    render(<App />);
+    renderApp();
 
     expect(
       await screen.findByText(/could not load characters/i)
@@ -74,7 +87,7 @@ describe('App', () => {
     const user = userEvent.setup();
     mockedFetch.mockResolvedValue({ results: [] });
 
-    render(<App />);
+    renderApp();
 
     await waitFor(() => {
       expect(mockedFetch).toHaveBeenCalledTimes(1);
