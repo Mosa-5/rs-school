@@ -1,18 +1,37 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Search from '../components/search/search';
 import CardList, { type CardItem } from '../components/cardList/cardList';
 import Loader from '../components/loader/loader';
 import BugButton from '../components/bugButton/bugButton';
+import Pagination from '../components/pagination/pagination';
 import { fetchCharacters } from '../api/richAndMorty';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const SEARCH_KEY = 'rs-school:lastSearch';
 
 function Home() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useLocalStorage(SEARCH_KEY, '');
   const [items, setItems] = useState<CardItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const page = Number(searchParams.get('page')) || 1;
+
+  useEffect(() => {
+    if (!searchParams.has('page')) {
+      setSearchParams(
+        (prev) => {
+          const next = new URLSearchParams(prev);
+          next.set('page', '1');
+          return next;
+        },
+        { replace: true }
+      );
+    }
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
     let cancelled = false;
@@ -22,7 +41,7 @@ function Home() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setError(null);
 
-    fetchCharacters({ search: term || undefined })
+    fetchCharacters({ search: term || undefined, page })
       .then((data) => {
         if (cancelled) return;
         setItems(
@@ -32,6 +51,7 @@ function Home() {
             description: `${character.species} | ${character.status}`,
           }))
         );
+        setTotalPages(data.info?.pages ?? 1);
       })
       .catch(() => {
         if (cancelled) return;
@@ -46,10 +66,23 @@ function Home() {
     return () => {
       cancelled = true;
     };
-  }, [searchTerm]);
+  }, [searchTerm, page]);
 
   const handleSearch = (rawTerm: string) => {
     setSearchTerm(rawTerm.trim());
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('page', '1');
+      return next;
+    });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('page', String(newPage));
+      return next;
+    });
   };
 
   const renderResults = () => {
@@ -58,12 +91,21 @@ function Home() {
     return <CardList items={items} />;
   };
 
+  const showPagination = !loading && !error && items.length > 0;
+
   return (
     <>
       <section className="controls">
         <Search initialValue={searchTerm} onSearch={handleSearch} />
       </section>
       <section className="results">{renderResults()}</section>
+      {showPagination && (
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
       <BugButton />
     </>
   );

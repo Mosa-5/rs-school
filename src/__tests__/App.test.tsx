@@ -19,6 +19,11 @@ const character = (overrides: Partial<Character> = {}): Character => ({
   ...overrides,
 });
 
+const okResponse = (results: Character[] = [], pages = 1) => ({
+  info: { count: results.length, pages },
+  results,
+});
+
 const renderApp = () =>
   render(
     <MemoryRouter initialEntries={['/']}>
@@ -37,30 +42,36 @@ describe('App', () => {
   });
 
   test('fetches with no search on mount when localStorage is empty', async () => {
-    mockedFetch.mockResolvedValue({ results: [] });
+    mockedFetch.mockResolvedValue(okResponse());
 
     renderApp();
 
     await waitFor(() => {
-      expect(mockedFetch).toHaveBeenCalledWith({ search: undefined });
+      expect(mockedFetch).toHaveBeenCalledWith({
+        search: undefined,
+        page: 1,
+      });
     });
   });
 
   test('uses saved localStorage term on mount', async () => {
     localStorage.setItem(SEARCH_KEY, 'morty');
-    mockedFetch.mockResolvedValue({ results: [] });
+    mockedFetch.mockResolvedValue(okResponse());
 
     renderApp();
 
     await waitFor(() => {
-      expect(mockedFetch).toHaveBeenCalledWith({ search: 'morty' });
+      expect(mockedFetch).toHaveBeenCalledWith({
+        search: 'morty',
+        page: 1,
+      });
     });
   });
 
   test('shows loader during fetch and cards on success', async () => {
-    mockedFetch.mockResolvedValue({
-      results: [character({ id: 1, name: 'Rick Sanchez' })],
-    });
+    mockedFetch.mockResolvedValue(
+      okResponse([character({ id: 1, name: 'Rick Sanchez' })])
+    );
 
     renderApp();
 
@@ -85,7 +96,7 @@ describe('App', () => {
 
   test('clicking Search re-fetches with new term and writes to localStorage', async () => {
     const user = userEvent.setup();
-    mockedFetch.mockResolvedValue({ results: [] });
+    mockedFetch.mockResolvedValue(okResponse());
 
     renderApp();
 
@@ -97,7 +108,10 @@ describe('App', () => {
     await user.click(screen.getByRole('button', { name: 'Search' }));
 
     await waitFor(() => {
-      expect(mockedFetch).toHaveBeenLastCalledWith({ search: 'rick' });
+      expect(mockedFetch).toHaveBeenLastCalledWith({
+        search: 'rick',
+        page: 1,
+      });
     });
     expect(localStorage.getItem(SEARCH_KEY)).toBe('rick');
   });

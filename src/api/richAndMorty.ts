@@ -7,17 +7,26 @@ export type Character = {
   species: string;
 };
 
+export type CharactersInfo = {
+  count: number;
+  pages: number;
+};
+
 type CharactersResponse = {
+  info: CharactersInfo;
   results: Character[];
 };
 
 export async function fetchCharacters(
-  params: { search?: string } = {}
+  params: { search?: string; page?: number } = {}
 ): Promise<CharactersResponse> {
   const url = new URL(`${BASE_URL}/character`);
 
   if (params.search) {
     url.searchParams.set('name', params.search);
+  }
+  if (params.page) {
+    url.searchParams.set('page', String(params.page));
   }
 
   const res = await fetch(url);
