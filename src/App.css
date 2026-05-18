@@ -17,6 +17,24 @@ body {
   gap: 20px;
 }
 
+.nav {
+  display: flex;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+.nav a {
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.nav a:hover {
+  background: #eee;
+}
+
 .controls {
   max-width: 400px;
   width: 100%;

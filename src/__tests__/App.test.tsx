@@ -4,6 +4,7 @@ import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import App from '../App';
 import Home from '../routes/Home';
 import Details from '../routes/Details';
+import About from '../routes/About';
 import { fetchCharacters, type Character } from '../api/richAndMorty';
 
 jest.mock('../api/richAndMorty');
@@ -34,6 +35,7 @@ const renderApp = () =>
             <Route index element={null} />
             <Route path="details/:detailsId" element={<Details />} />
           </Route>
+          <Route path="about" element={<About />} />
         </Route>
       </Routes>
     </MemoryRouter>
