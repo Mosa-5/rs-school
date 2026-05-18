@@ -1,4 +1,4 @@
-import { Component, type ChangeEvent, type ReactNode } from 'react';
+import { useState, type ChangeEvent } from 'react';
 import styles from './search.module.css';
 
 type SearchProps = {
@@ -6,38 +6,30 @@ type SearchProps = {
   onSearch: (value: string) => void;
 };
 
-type SearchState = {
-  value: string;
-};
+function Search({ initialValue, onSearch }: SearchProps) {
+  const [value, setValue] = useState(initialValue);
 
-class Search extends Component<SearchProps, SearchState> {
-  state: SearchState = {
-    value: this.props.initialValue,
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
   };
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ value: e.target.value });
+  const handleClick = () => {
+    onSearch(value);
   };
 
-  handleClick = () => {
-    this.props.onSearch(this.state.value);
-  };
-
-  render(): ReactNode {
-    return (
-      <div className={styles.search}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.state.value}
-          onChange={this.handleChange}
-        />
-        <button type="button" onClick={this.handleClick}>
-          Search
-        </button>
-      </div>
-    );
-  }
+  return (
+    <div className={styles.search}>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={value}
+        onChange={handleChange}
+      />
+      <button type="button" onClick={handleClick}>
+        Search
+      </button>
+    </div>
+  );
 }
 
 export default Search;
