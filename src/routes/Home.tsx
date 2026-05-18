@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState, type MouseEvent } from 'react';
+import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import Search from '../components/search/search';
 import CardList, { type CardItem } from '../components/cardList/cardList';
 import Loader from '../components/loader/loader';
@@ -7,11 +7,13 @@ import BugButton from '../components/bugButton/bugButton';
 import Pagination from '../components/pagination/pagination';
 import { fetchCharacters } from '../api/richAndMorty';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import styles from './Home.module.css';
 
 const SEARCH_KEY = 'rs-school:lastSearch';
 
 function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useLocalStorage(SEARCH_KEY, '');
   const [items, setItems] = useState<CardItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -85,29 +87,45 @@ function Home() {
     });
   };
 
+  const handleItemClick = (id: number) => {
+    navigate({
+      pathname: `/details/${id}`,
+      search: searchParams.toString(),
+    });
+  };
+
+  const handleMainClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      navigate({ pathname: '/', search: searchParams.toString() });
+    }
+  };
+
   const renderResults = () => {
     if (loading) return <Loader />;
     if (error) return <p className="error">{error}</p>;
-    return <CardList items={items} />;
+    return <CardList items={items} onItemClick={handleItemClick} />;
   };
 
   const showPagination = !loading && !error && items.length > 0;
 
   return (
-    <>
-      <section className="controls">
-        <Search initialValue={searchTerm} onSearch={handleSearch} />
-      </section>
-      <section className="results">{renderResults()}</section>
-      {showPagination && (
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          onPageChange={handlePageChange}
-        />
-      )}
-      <BugButton />
-    </>
+    <div className={styles.layout}>
+      <div className={styles.main} onClick={handleMainClick}>
+        <section className="controls">
+          <Search initialValue={searchTerm} onSearch={handleSearch} />
+        </section>
+        <section className="results">{renderResults()}</section>
+        {showPagination && (
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
+        <BugButton />
+      </div>
+      <Outlet />
+    </div>
   );
 }
 

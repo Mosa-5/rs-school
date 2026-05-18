@@ -37,3 +37,16 @@ export async function fetchCharacters(
 
   return res.json();
 }
+
+export async function fetchCharacter(
+  id: number | string
+): Promise<Character> {
+  const url = new URL(`${BASE_URL}/character/${id}`);
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Request failed: ${res.status}`);
+  }
+
+  return res.json();
+}

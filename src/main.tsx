@@ -5,6 +5,7 @@ import ErrorBoundary from './components/errorBoundary/errorBoundary';
 import './index.css';
 import App from './App.tsx';
 import Home from './routes/Home.tsx';
+import Details from './routes/Details.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,7 +13,10 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<Home />} />
+            <Route element={<Home />}>
+              <Route index element={null} />
+              <Route path="details/:detailsId" element={<Details />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import App from '../App';
 import Home from '../routes/Home';
+import Details from '../routes/Details';
 import { fetchCharacters, type Character } from '../api/richAndMorty';
 
 jest.mock('../api/richAndMorty');
@@ -29,7 +30,10 @@ const renderApp = () =>
     <MemoryRouter initialEntries={['/']}>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
+          <Route element={<Home />}>
+            <Route index element={null} />
+            <Route path="details/:detailsId" element={<Details />} />
+          </Route>
         </Route>
       </Routes>
     </MemoryRouter>
