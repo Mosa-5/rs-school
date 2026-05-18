@@ -6,11 +6,16 @@ import Home from '../routes/Home';
 import Details from '../routes/Details';
 import About from '../routes/About';
 import NotFound from '../routes/NotFound';
-import { fetchCharacters, type Character } from '../api/richAndMorty';
+import {
+  fetchCharacter,
+  fetchCharacters,
+  type Character,
+} from '../api/richAndMorty';
 
 jest.mock('../api/richAndMorty');
 
 const mockedFetch = fetchCharacters as jest.Mock;
+const mockedFetchCharacter = fetchCharacter as jest.Mock;
 
 const SEARCH_KEY = 'rs-school:lastSearch';
 
@@ -47,6 +52,7 @@ describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
     mockedFetch.mockReset();
+    mockedFetchCharacter.mockReset();
   });
 
   test('fetches with no search on mount when localStorage is empty', async () => {
@@ -122,5 +128,28 @@ describe('App', () => {
       });
     });
     expect(localStorage.getItem(SEARCH_KEY)).toBe('rick');
+  });
+
+  test('clicking a card opens the details panel', async () => {
+    const user = userEvent.setup();
+    mockedFetch.mockResolvedValue(
+      okResponse([character({ id: 42, name: 'Rick Sanchez' })])
+    );
+    mockedFetchCharacter.mockResolvedValue(character({ id: 42 }));
+
+    renderApp();
+
+    const cardHeading = await screen.findByRole('heading', {
+      name: 'Rick Sanchez',
+    });
+    await user.click(cardHeading);
+
+    await waitFor(() => {
+      expect(mockedFetchCharacter).toHaveBeenCalledWith('42');
+    });
+
+    expect(
+      await screen.findByRole('button', { name: 'Close' })
+    ).toBeInTheDocument();
   });
 });
