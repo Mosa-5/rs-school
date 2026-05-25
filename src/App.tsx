@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom';
+import Flyout from './components/flyout/flyout';
 import './App.css';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
         <Link to="/about">About</Link>
       </nav>
       <Outlet />
+      <Flyout />
     </div>
   );
 }
