@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import ThemeProvider from '../context/ThemeProvider';
 import App from '../App';
 import Home from '../routes/Home';
 import Details from '../routes/Details';
@@ -37,18 +38,20 @@ const okResponse = (results: Character[] = [], pages = 1) => ({
 const renderApp = () =>
   render(
     <Provider store={setupStore()}>
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route element={<Home />}>
-              <Route index element={null} />
-              <Route path="details/:detailsId" element={<Details />} />
+      <ThemeProvider>
+        <MemoryRouter initialEntries={['/']}>
+          <Routes>
+            <Route path="/" element={<App />}>
+              <Route element={<Home />}>
+                <Route index element={null} />
+                <Route path="details/:detailsId" element={<Details />} />
+              </Route>
+              <Route path="about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
-            <Route path="about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </MemoryRouter>
+          </Routes>
+        </MemoryRouter>
+      </ThemeProvider>
     </Provider>
   );
 

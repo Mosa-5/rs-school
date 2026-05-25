@@ -40,7 +40,6 @@ function Home() {
     const term = searchTerm.trim();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setError(null);
 
     fetchCharacters({ search: term || undefined, page })
