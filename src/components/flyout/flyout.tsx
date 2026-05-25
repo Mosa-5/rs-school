@@ -1,11 +1,13 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { unselectAll } from '../../store/selectedItemsSlice';
+import { downloadCsv } from '../../utils/downloadCsv';
 import styles from './flyout.module.css';
 
 function Flyout() {
   const dispatch = useAppDispatch();
   const items = useAppSelector((state) => state.selectedItems.items);
-  const count = Object.keys(items).length;
+  const selectedItems = Object.values(items);
+  const count = selectedItems.length;
 
   if (count === 0) {
     return null;
@@ -20,7 +22,9 @@ function Flyout() {
         <button type="button" onClick={() => dispatch(unselectAll())}>
           Unselect all
         </button>
-        <button type="button">Download</button>
+        <button type="button" onClick={() => downloadCsv(selectedItems)}>
+          Download
+        </button>
       </div>
     </div>
   );
