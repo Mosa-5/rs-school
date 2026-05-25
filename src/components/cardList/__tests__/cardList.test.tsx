@@ -1,5 +1,8 @@
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { type ReactElement } from 'react';
 import CardList, { type CardItem } from '../cardList';
+import { setupStore } from '../../../store/store';
 
 const mockCardList: CardItem[] = [
   {
@@ -14,15 +17,18 @@ const mockCardList: CardItem[] = [
   },
 ];
 
+const renderWithStore = (ui: ReactElement) =>
+  render(<Provider store={setupStore()}>{ui}</Provider>);
+
 describe('CardList', () => {
   test('shows fallback when 0 cards are provided', () => {
-    render(<CardList items={[]} />);
+    renderWithStore(<CardList items={[]} />);
 
     expect(screen.getByText('No results.')).toBeInTheDocument();
   });
 
   test('renders provided cards', () => {
-    render(<CardList items={mockCardList} />);
+    renderWithStore(<CardList items={mockCardList} />);
     expect(screen.getAllByRole('heading')).toHaveLength(mockCardList.length);
   });
 });
