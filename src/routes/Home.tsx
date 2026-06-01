@@ -5,6 +5,7 @@ import CardList from '../components/cardList/cardList';
 import Loader from '../components/loader/loader';
 import BugButton from '../components/bugButton/bugButton';
 import Pagination from '../components/pagination/pagination';
+import RefreshButton from '../components/refreshButton/refreshButton';
 import { useGetCharactersQuery } from '../store/apiSlice';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import styles from './Home.module.css';
@@ -93,6 +94,7 @@ function Home() {
       <div className={styles.main} onClick={handleMainClick}>
         <section className="controls">
           <Search initialValue={searchTerm} onSearch={handleSearch} />
+          <RefreshButton />
         </section>
         <section className="results">{renderResults()}</section>
         {showPagination && (
