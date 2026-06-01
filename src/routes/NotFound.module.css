@@ -1,0 +1,28 @@
+.notFound {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.notFound h1 {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.notFound p {
+  margin-bottom: 16px;
+}
+
+.link {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #fff;
+  border-radius: 6px;
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: #eee;
+}

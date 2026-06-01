@@ -1,0 +1,22 @@
+/** @type {import('jest').Config} */
+module.exports = {
+  testEnvironment: 'jest-fixed-jsdom',
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  moduleNameMapper: {
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '/config/env$': '<rootDir>/src/config/env.stub.ts',
+  },
+  collectCoverageFrom: [
+    'src/**/*.{ts,tsx}',
+    '!src/**/*.d.ts',
+    '!src/**/*.test.{ts,tsx}',
+    '!src/**/*.spec.{ts,tsx}',
+    '!src/main.tsx',
+    '!src/setupTests.ts',
+    '!src/config/env.ts',
+    '!src/config/env.stub.ts',
+  ],
+  coverageThreshold: {
+    global: { statements: 80, branches: 50, functions: 50, lines: 50 },
+  },
+};
