@@ -1,39 +1,19 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import Loader from '../components/loader/loader';
-import { fetchCharacter, type Character } from '../api/richAndMorty';
+import { useGetCharacterQuery } from '../store/apiSlice';
 import styles from './Details.module.css';
 
 function Details() {
   const { detailsId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [character, setCharacter] = useState<Character | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!detailsId) return;
-    let cancelled = false;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLoading(true);
-    setError(null);
-
-    fetchCharacter(detailsId)
-      .then((data) => {
-        if (!cancelled) setCharacter(data);
-      })
-      .catch(() => {
-        if (!cancelled) setError('Could not load character.');
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [detailsId]);
+  const {
+    data: character,
+    isFetching,
+    isError,
+  } = useGetCharacterQuery(detailsId ?? '', { skip: !detailsId });
 
   const handleClose = () => {
     navigate({ pathname: '/', search: searchParams.toString() });
@@ -48,9 +28,9 @@ function Details() {
       <button type="button" onClick={handleClose} className={styles.close}>
         Close
       </button>
-      {loading && <Loader />}
-      {error && <p className="error">{error}</p>}
-      {character && !loading && !error && (
+      {isFetching && <Loader />}
+      {isError && <p className="error">Could not load character.</p>}
+      {character && !isFetching && !isError && (
         <div>
           <h2>{character.name}</h2>
           <p>

@@ -1,37 +1,30 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import Details from '../Details';
-import { fetchCharacter, type Character } from '../../api/richAndMorty';
-
-jest.mock('../../api/richAndMorty');
-
-const mockedFetchCharacter = fetchCharacter as jest.Mock;
-
-const character: Character = {
-  id: 42,
-  name: 'Rick Sanchez',
-  status: 'Alive',
-  species: 'Human',
-};
+import { setupStore } from '../../store/store';
+import { installFetchMock, makeCharacter } from '../../test-utils/fetchMock';
 
 const renderWithRoute = (initialEntry: string) =>
   render(
-    <MemoryRouter initialEntries={[initialEntry]}>
-      <Routes>
-        <Route path="/details/:detailsId" element={<Details />} />
-        <Route path="/" element={<div>Home page</div>} />
-      </Routes>
-    </MemoryRouter>
+    <Provider store={setupStore()}>
+      <MemoryRouter initialEntries={[initialEntry]}>
+        <Routes>
+          <Route path="/details/:detailsId" element={<Details />} />
+          <Route path="/" element={<div>Home page</div>} />
+        </Routes>
+      </MemoryRouter>
+    </Provider>
   );
 
 describe('Details', () => {
-  beforeEach(() => {
-    mockedFetchCharacter.mockReset();
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
   test('shows loader while fetching, then character info on success', async () => {
-    mockedFetchCharacter.mockResolvedValue(character);
+    installFetchMock(() => ({ body: makeCharacter({ id: 42 }) }));
 
     renderWithRoute('/details/42');
 
@@ -48,7 +41,7 @@ describe('Details', () => {
   });
 
   test('shows error message when fetch fails', async () => {
-    mockedFetchCharacter.mockRejectedValue(new Error('boom'));
+    installFetchMock(() => ({ status: 500, body: {} }));
 
     renderWithRoute('/details/42');
 
@@ -59,7 +52,7 @@ describe('Details', () => {
 
   test('Close button navigates back to home', async () => {
     const user = userEvent.setup();
-    mockedFetchCharacter.mockResolvedValue(character);
+    installFetchMock(() => ({ body: makeCharacter({ id: 42 }) }));
 
     renderWithRoute('/details/42');
 
