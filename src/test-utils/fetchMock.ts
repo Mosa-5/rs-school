@@ -48,3 +48,6 @@ export const lastFetchUrl = (fetchMock: jest.Mock): string => {
   const { calls } = fetchMock.mock;
   return getRequestUrl(calls[calls.length - 1][0]);
 };
+
+export const fetchedUrls = (fetchMock: jest.Mock): string[] =>
+  fetchMock.mock.calls.map((call) => getRequestUrl(call[0]));
