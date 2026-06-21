@@ -1,0 +1,10 @@
+{
+  "App": {
+    "title": "Rick and Morty Explorer",
+    "description": "Search and browse Rick and Morty characters"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About"
+  }
+}
