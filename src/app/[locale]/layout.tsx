@@ -7,6 +7,7 @@ import { routing } from '../../i18n/routing';
 import ThemeProvider from '../../context/ThemeProvider';
 import { StoreProvider } from '../StoreProvider';
 import { Header } from '../../components/header/header';
+import { SelectionBar } from '../../components/selectionBar/selectionBar';
 import '../../index.css';
 import '../../App.css';
 
@@ -43,6 +44,7 @@ export default async function LocaleLayout({
               <div className="app">
                 <Header />
                 {children}
+                <SelectionBar />
               </div>
             </ThemeProvider>
           </StoreProvider>

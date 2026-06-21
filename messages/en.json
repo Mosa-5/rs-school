@@ -39,5 +39,11 @@
     "title": "Something went wrong",
     "message": "An unexpected error occurred.",
     "retry": "Try again"
+  },
+  "Selection": {
+    "select": "Select {name}",
+    "selected": "{count, plural, one {# item selected} other {# items selected}}",
+    "download": "Download CSV",
+    "unselectAll": "Unselect all"
   }
 }
