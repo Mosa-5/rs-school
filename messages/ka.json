@@ -8,6 +8,10 @@
     "about": "შესახებ",
     "language": "ენა"
   },
+  "Theme": {
+    "switchToDark": "მუქი თემა",
+    "switchToLight": "ღია თემა"
+  },
   "Search": {
     "placeholder": "მოძებნე პერსონაჟები...",
     "submit": "ძებნა",

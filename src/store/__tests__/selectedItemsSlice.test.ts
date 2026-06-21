@@ -1,5 +1,8 @@
-import reducer, { toggleItem, unselectAll } from '../selectedItemsSlice';
-import type { CardItem } from '../../components/cardList/cardList';
+import reducer, {
+  toggleItem,
+  unselectAll,
+  type CardItem,
+} from '../selectedItemsSlice';
 
 const rick: CardItem = { id: 1, title: 'Rick', description: 'Human | Alive' };
 const morty: CardItem = { id: 2, title: 'Morty', description: 'Human | Alive' };

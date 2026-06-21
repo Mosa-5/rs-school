@@ -8,6 +8,10 @@
     "about": "About",
     "language": "Language"
   },
+  "Theme": {
+    "switchToDark": "Dark mode",
+    "switchToLight": "Light mode"
+  },
   "Search": {
     "placeholder": "Search characters...",
     "submit": "Search",
