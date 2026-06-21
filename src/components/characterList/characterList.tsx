@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { Character } from '../../api/richAndMorty';
 import { Link } from '../../i18n/navigation';
 import styles from './characterList.module.css';
@@ -24,10 +25,19 @@ export function CharacterList({ characters, query, page }: CharacterListProps) {
           }}
           className={styles.card}
         >
-          <h2 className={styles.name}>{character.name}</h2>
-          <p className={styles.meta}>
-            {character.species} | {character.status}
-          </p>
+          <Image
+            src={character.image}
+            alt={character.name}
+            width={64}
+            height={64}
+            className={styles.avatar}
+          />
+          <div className={styles.text}>
+            <h2 className={styles.name}>{character.name}</h2>
+            <p className={styles.meta}>
+              {character.species} | {character.status}
+            </p>
+          </div>
         </Link>
       ))}
     </div>

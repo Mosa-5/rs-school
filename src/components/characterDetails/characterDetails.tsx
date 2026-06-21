@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
 import { getCharacter } from '../../lib/characters';
 import { Link } from '../../i18n/navigation';
@@ -32,14 +33,23 @@ export async function CharacterDetails({
       </div>
 
       {character ? (
-        <dl className={styles.info}>
-          <dt>{t('name')}</dt>
-          <dd>{character.name}</dd>
-          <dt>{t('species')}</dt>
-          <dd>{character.species}</dd>
-          <dt>{t('status')}</dt>
-          <dd>{character.status}</dd>
-        </dl>
+        <>
+          <Image
+            src={character.image}
+            alt={character.name}
+            width={240}
+            height={240}
+            className={styles.avatar}
+          />
+          <dl className={styles.info}>
+            <dt>{t('name')}</dt>
+            <dd>{character.name}</dd>
+            <dt>{t('species')}</dt>
+            <dd>{character.species}</dd>
+            <dt>{t('status')}</dt>
+            <dd>{character.status}</dd>
+          </dl>
+        </>
       ) : (
         <p>{t('notFound')}</p>
       )}
