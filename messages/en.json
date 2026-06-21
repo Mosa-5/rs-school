@@ -14,5 +14,13 @@
     "previous": "Previous",
     "next": "Next",
     "pageInfo": "Page {page} of {total}"
+  },
+  "Details": {
+    "title": "Character details",
+    "close": "Close",
+    "name": "Name",
+    "species": "Species",
+    "status": "Status",
+    "notFound": "Character not found."
   }
 }

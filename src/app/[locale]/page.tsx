@@ -2,6 +2,8 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { getCharacters } from '../../lib/characters';
 import { CharacterList } from '../../components/characterList/characterList';
 import { SearchPagination } from '../../components/searchPagination/searchPagination';
+import { CharacterDetails } from '../../components/characterDetails/characterDetails';
+import { searchAction } from '../../actions/search';
 import styles from './page.module.css';
 
 type HomePageProps = {
@@ -13,7 +15,7 @@ export default async function HomePage({ params, searchParams }: HomePageProps) 
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const { q, page: pageParam } = await searchParams;
+  const { q, page: pageParam, details } = await searchParams;
   const page = Number(pageParam) || 1;
   const search = q?.trim() || undefined;
 
@@ -26,7 +28,7 @@ export default async function HomePage({ params, searchParams }: HomePageProps) 
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
-        <form className={styles.searchForm} method="get">
+        <form className={styles.searchForm} action={searchAction}>
           <input
             type="search"
             name="q"
@@ -55,7 +57,11 @@ export default async function HomePage({ params, searchParams }: HomePageProps) 
         )}
       </div>
 
-      <aside className={styles.detailsPanel} />
+      <aside className={styles.detailsPanel}>
+        {details && (
+          <CharacterDetails id={details} query={search} page={page} />
+        )}
+      </aside>
     </div>
   );
 }

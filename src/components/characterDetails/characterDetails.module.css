@@ -1,0 +1,38 @@
+.panel {
+  padding: 16px;
+  border: 1px solid var(--surface-hover);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+}
+
+.close {
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.info {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 12px;
+}
+
+.info dt {
+  font-weight: 600;
+}
+
+.info dd {
+  margin: 0;
+}
