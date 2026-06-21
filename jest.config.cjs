@@ -2,6 +2,20 @@
 module.exports = {
   testEnvironment: 'jest-fixed-jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  transform: {
+    '^.+\\.(t|j)sx?$': [
+      'babel-jest',
+      {
+        configFile: false,
+        babelrc: false,
+        presets: [
+          ['@babel/preset-env', { targets: { node: 'current' } }],
+          ['@babel/preset-react', { runtime: 'automatic' }],
+          '@babel/preset-typescript',
+        ],
+      },
+    ],
+  },
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     '/config/env$': '<rootDir>/src/config/env.stub.ts',

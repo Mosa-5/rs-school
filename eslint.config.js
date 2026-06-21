@@ -21,6 +21,9 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    settings: {
+      react: { version: 'detect' },
+    },
   },
   {
     files: ['**/*.{test,spec}.{ts,tsx}', 'src/setupTests.ts'],
