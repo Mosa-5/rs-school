@@ -6,5 +6,13 @@
   "Nav": {
     "home": "Home",
     "about": "About"
+  },
+  "Search": {
+    "placeholder": "Search characters...",
+    "submit": "Search",
+    "noResults": "No characters found.",
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {page} of {total}"
   }
 }

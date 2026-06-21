@@ -1,0 +1,31 @@
+.layout {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.searchForm {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px;
+}
+
+.detailsPanel {
+  width: 320px;
+  flex-shrink: 0;
+}
+
+.noResults {
+  text-align: center;
+  opacity: 0.7;
+}
