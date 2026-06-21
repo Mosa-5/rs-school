@@ -6,7 +6,7 @@ function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button type="button" onClick={toggleTheme}>
+    <button type="button" onClick={toggleTheme} suppressHydrationWarning>
       {theme === 'light' ? 'Dark mode' : 'Light mode'}
     </button>
   );

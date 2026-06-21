@@ -38,6 +38,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem('rs-school:theme');if(t==='dark'||t==='light'){document.documentElement.dataset.theme=t;}}catch(e){}`,
+          }}
+        />
         <NextIntlClientProvider>
           <StoreProvider>
             <ThemeProvider>
