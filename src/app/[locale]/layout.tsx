@@ -6,6 +6,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { routing } from '../../i18n/routing';
 import ThemeProvider from '../../context/ThemeProvider';
 import { StoreProvider } from '../StoreProvider';
+import { Header } from '../../components/header/header';
 import '../../index.css';
 import '../../App.css';
 
@@ -38,7 +39,12 @@ export default async function LocaleLayout({
       <body>
         <NextIntlClientProvider>
           <StoreProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              <div className="app">
+                <Header />
+                {children}
+              </div>
+            </ThemeProvider>
           </StoreProvider>
         </NextIntlClientProvider>
       </body>
