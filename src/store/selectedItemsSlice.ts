@@ -1,5 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { CardItem } from '../components/cardList/cardList';
+
+export type CardItem = {
+  id: number;
+  title: string;
+  description: string;
+};
 
 type SelectedItemsState = {
   items: Record<number, CardItem>;

@@ -1,0 +1,5 @@
+.about {
+  padding: 20px;
+  background: var(--surface);
+  border-radius: 8px;
+}

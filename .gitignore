@@ -13,6 +13,14 @@ dist-ssr
 coverage
 *.local
 
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# typescript
+*.tsbuildinfo
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

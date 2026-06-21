@@ -1,0 +1,53 @@
+{
+  "App": {
+    "title": "რიკი და მორტის მაძიებელი",
+    "description": "მოძებნე და დაათვალიერე რიკი და მორტის პერსონაჟები"
+  },
+  "Nav": {
+    "home": "მთავარი",
+    "about": "შესახებ",
+    "language": "ენა"
+  },
+  "Theme": {
+    "switchToDark": "მუქი თემა",
+    "switchToLight": "ღია თემა"
+  },
+  "Search": {
+    "placeholder": "მოძებნე პერსონაჟები...",
+    "submit": "ძებნა",
+    "noResults": "პერსონაჟები ვერ მოიძებნა.",
+    "previous": "წინა",
+    "next": "შემდეგი",
+    "pageInfo": "გვერდი {page} / {total}"
+  },
+  "Details": {
+    "title": "პერსონაჟის დეტალები",
+    "close": "დახურვა",
+    "name": "სახელი",
+    "species": "სახეობა",
+    "status": "სტატუსი",
+    "notFound": "პერსონაჟი ვერ მოიძებნა."
+  },
+  "About": {
+    "title": "შესახებ",
+    "builtBy": "ეს აპლიკაცია შექმნა ლევანმა :)",
+    "learnMore": "გაიგე მეტი კურსის შესახებ:",
+    "courseLink": "RS School-ის React კურსი"
+  },
+  "NotFound": {
+    "title": "404",
+    "message": "გვერდი ვერ მოიძებნა.",
+    "backHome": "მთავარზე დაბრუნება"
+  },
+  "Error": {
+    "title": "რაღაც არ მუშაობს",
+    "message": "მოხდა მოულოდნელი შეცდომა.",
+    "retry": "ხელახლა ცდა"
+  },
+  "Selection": {
+    "select": "მონიშნე {name}",
+    "selected": "{count, plural, one {მონიშნულია # ელემენტი} other {მონიშნულია # ელემენტი}}",
+    "download": "CSV-ის ჩამოტვირთვა",
+    "unselectAll": "მონიშვნის გაუქმება"
+  }
+}

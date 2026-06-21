@@ -1,0 +1,53 @@
+{
+  "App": {
+    "title": "Rick and Morty Explorer",
+    "description": "Search and browse Rick and Morty characters"
+  },
+  "Nav": {
+    "home": "Home",
+    "about": "About",
+    "language": "Language"
+  },
+  "Theme": {
+    "switchToDark": "Dark mode",
+    "switchToLight": "Light mode"
+  },
+  "Search": {
+    "placeholder": "Search characters...",
+    "submit": "Search",
+    "noResults": "No characters found.",
+    "previous": "Previous",
+    "next": "Next",
+    "pageInfo": "Page {page} of {total}"
+  },
+  "Details": {
+    "title": "Character details",
+    "close": "Close",
+    "name": "Name",
+    "species": "Species",
+    "status": "Status",
+    "notFound": "Character not found."
+  },
+  "About": {
+    "title": "About",
+    "builtBy": "This application was built by Levan :)",
+    "learnMore": "Learn more about the course:",
+    "courseLink": "RS School React course"
+  },
+  "NotFound": {
+    "title": "404",
+    "message": "Page not found.",
+    "backHome": "Back to home"
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "message": "An unexpected error occurred.",
+    "retry": "Try again"
+  },
+  "Selection": {
+    "select": "Select {name}",
+    "selected": "{count, plural, one {# item selected} other {# items selected}}",
+    "download": "Download CSV",
+    "unselectAll": "Unselect all"
+  }
+}
